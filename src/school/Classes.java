@@ -5,8 +5,8 @@ import user.Student;
 import java.util.ArrayList;
 
 public class Classes {
-    String name;
-    ArrayList<Student> students;
+    private String name;
+    private ArrayList<Student> students;
 
     public Classes(String name, ArrayList<Student> students) {
         this.name = name;

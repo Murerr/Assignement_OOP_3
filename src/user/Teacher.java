@@ -1,7 +1,7 @@
 package user;
 
 public class Teacher extends Person {
-    String degree;
+    private String degree;
 
     public Teacher(Name name, String email, String phone, String degree) {
         super(name, email, phone);

@@ -2,9 +2,9 @@ package user;
 
 public class Person {
 
-    Name name;
-    String email;
-    String phone;
+    private Name name;
+    private String email;
+    private String phone;
 
 
     public Person(Name name, String email, String phone) {
