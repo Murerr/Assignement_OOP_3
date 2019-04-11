@@ -34,6 +34,7 @@ public class StudentController extends javafx.scene.control.Tab {
     private TextField email;
     private TextField phone;
     private TextField dob;
+    private TextField classNumber;
 
 
 
@@ -49,7 +50,7 @@ public class StudentController extends javafx.scene.control.Tab {
         ObservableList<Student> observableStudentList = FXCollections.observableArrayList(studentArrayList);
         table.setItems(observableStudentList);
 
-        //addButton.setOnAction(event -> addCar(studentList,getUserInput()));
+        addButton.setOnAction(event -> addStudent(observableStudentList,getUserInput(),databaseController));
         deleteButton.setOnAction(event -> deleteStudent(observableStudentList,table.getSelectionModel().getSelectedIndex(),databaseController));
 
         this.setContent(vb);
@@ -88,25 +89,33 @@ public class StudentController extends javafx.scene.control.Tab {
         databaseController.deleteStudent(studentToBeRemoved.getId());
     }
 
-    /*private void addCar(ObservableList<Student> studentList, Map<String, String> userInput){
-        studentList.add( new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997","TEST"));
-    }*/
+    private void addStudent(ObservableList<Student> studentList, Map<String, String> userInput,DatabaseController databaseController){
+        Student studentToBeAddedToDB = new Student( 0,new Name(userInput.get("name"), userInput.get("lastName")),
+                userInput.get("email"),
+                userInput.get("phone"),
+                userInput.get("dob"),
+                userInput.get("classNumber"));
+        studentList.add(studentToBeAddedToDB);
+        databaseController.addStudent(studentToBeAddedToDB);
+        //studentList.add( new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997","TEST"));
+    }
 
     /**
      * @return Retrieve User input in a <String,String>Map
      */
-    /*private Map<String, String> getUserInput(){
+    private Map<String, String> getUserInput(){
 
         Map<String, String> userInput = new HashMap<String, String>() {{
-            put("store",store.getText());
-            put("model",model.getText());
-            put("registration",registration.getText());
-            put("millage",millage.getText());
-            put("yearOfManufacture",yearOfManufacture.getText());
+            put("name",name.getText());
+            put("lastName",lastName.getText());
+            put("email",email.getText());
+            put("phone",phone.getText());
+            put("dob",dob.getText());
+            put("classNumber",classNumber.getText());
         }};
 
         return userInput;
-    }*/
+    }
 
     private void setUpTables(TableView table){
 
@@ -148,12 +157,14 @@ public class StudentController extends javafx.scene.control.Tab {
         email =           new TextField();
         phone=            new TextField();
         dob =             new TextField();
+        classNumber =     new TextField();
 
         Label nameLabel = new Label("Name");
         Label lastNameLabel = new Label("LastName");
         Label emailLabel = new Label("Email");
         Label phoneLabel = new Label("Phone");
         Label dobLabel = new Label("Date of Birth");
+        Label classLabel = new Label("Class Number");
 
         GridPane gp = new GridPane();
         gp.add(nameLabel,0,0);
@@ -161,14 +172,16 @@ public class StudentController extends javafx.scene.control.Tab {
         gp.add(emailLabel,2,0);
         gp.add(phoneLabel,3,0);
         gp.add(dobLabel,4,0);
-        gp.add(deleteButton,5,0);
+        gp.add(classLabel,5,0);
+        gp.add(deleteButton,6,0);
 
         gp.add(name,0,1);
         gp.add(lastName,1,1);
         gp.add(email,2,1);
         gp.add(phone,3,1);
         gp.add(dob,4,1);
-        gp.add(addButton,5,1);
+        gp.add(classNumber,5,1);
+        gp.add(addButton,6,1);
 
         hb.getChildren().add(gp);
         hb.setSpacing(3);

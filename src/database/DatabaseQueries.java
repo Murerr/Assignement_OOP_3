@@ -11,5 +11,7 @@ public interface DatabaseQueries {
 
     void deleteStudent(int studentId);
 
+    void addStudent(Student student);
+
 
 }

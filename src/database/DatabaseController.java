@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DatabaseController  implements DatabaseQueries{
     private Connection connection;
@@ -58,5 +59,31 @@ public class DatabaseController  implements DatabaseQueries{
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        try{
+            //TODO FIX DATABASE CONSTRAINT ERROR;
+            // HACK : SET GLOBAL FOREIGN_KEY_CHECKS=0
+            Statement stmt = connection.createStatement();
+
+            int randomNumber = new Random().nextInt(50)+1;
+            String query = "INSERT INTO `Student`(`name`, `lastName`, `dob`, `email`, `phone`, `fk_idClasses`) "
+                    + "VALUES (" +
+                    "'" + student.getName().getFirstName() + "'," +
+                    "'" + student.getName().getLastName() + "', " +
+                    "'" + student.getDob() + "'," +
+                    "'" + student.getEmail() + "'," +
+                    "'" + student.getPhone() + "'," +
+                    "'" + randomNumber + "')";
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
