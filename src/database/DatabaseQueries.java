@@ -7,5 +7,9 @@ import java.util.ArrayList;
 
 public interface DatabaseQueries {
 
-    ArrayList<Student> getStudentsInDatabase(Connection connection);
+    ArrayList<Student> getStudentsInDatabase();
+
+    void deleteStudent(int studentId);
+
+
 }

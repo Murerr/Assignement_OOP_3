@@ -4,8 +4,8 @@ public class Student extends Person implements Cloneable {
     private String dob;
     private String className;
 
-    public Student(Name name, String email, String phone, String dob, String className) {
-        super(name, email, phone);
+    public Student(int id, Name name, String email, String phone, String dob, String className) {
+        super(id, name, email, phone);
         this.dob = dob;
         this.className = className;
     }

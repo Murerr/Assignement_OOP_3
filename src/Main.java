@@ -21,16 +21,13 @@ public class Main extends Application { ;
     public void start(Stage primaryStage) {
         try {
 
-                Connection connection = ConnectionToDatabase.getInstance();
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery("SELECT * FROM `Student");
-
+            Connection connectionToDatabase = ConnectionToDatabase.getInstance();
             BorderPane mainPane = new BorderPane();
             Group root = new Group();
             Scene scene = new Scene(root,1200,800);
 
             TabPane tp = new TabPane();
-            tp.getTabs().add (new StudentController(connection));
+            tp.getTabs().add (new StudentController(connectionToDatabase));
 
             mainPane.setCenter(tp);
             mainPane.prefHeightProperty().bind(scene.heightProperty());
