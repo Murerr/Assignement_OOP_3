@@ -8,10 +8,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import user.Name;
 import user.Student;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,29 +48,31 @@ public class StudentController extends javafx.scene.control.Tab {
     TableColumn emailTable;
     TableColumn phoneTable;
     TableColumn dobTable;
+    TableColumn classTable;
 
 
 
     GridPane gp;
 
     // TODO CREATE A DATABASE WITH ALL THE CLASSES
-    private static ObservableList<Student> studentList = FXCollections.observableArrayList(
-            new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997"),
-            new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997"),
-            new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997"),
-            new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997"),
-            new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997")
-    );
+    private static ObservableList<Student> studentList = FXCollections.observableArrayList();
 
     private ObservableList<TableColumn> listTables = FXCollections.observableArrayList(
             nameTable = new TableColumn("Name"),
             emailTable = new TableColumn("email"),
             phoneTable = new TableColumn("phone"),
-            dobTable = new TableColumn("Date of Birth")
+            dobTable = new TableColumn("Date of Birth"),
+            classTable = new TableColumn("Class Name")
     );
 
-    public StudentController() {
-        this.setText("Car Panel");
+    public StudentController(Connection connection) {
+
+
+        getStudentsInDatabase(connection);
+
+
+
+        this.setText("Student Panel");
         table = new TableView();
         vb = new VBox();
         table.setEditable(true);
@@ -121,11 +126,13 @@ public class StudentController extends javafx.scene.control.Tab {
                 new PropertyValueFactory<Student, String>("dob"))
         );
 
+        //setUpValueInTables(propertyValueFactoryArrayList);
 
         nameTable.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
         emailTable.setCellValueFactory(new PropertyValueFactory<Student, String>("email"));
         phoneTable.setCellValueFactory(new PropertyValueFactory<Student, String>("phone"));
         dobTable.setCellValueFactory(new PropertyValueFactory<Student, String>("dob"));
+        classTable.setCellValueFactory(new PropertyValueFactory<Student, String>("className"));
 
         table.setItems(studentList);
 
@@ -136,6 +143,30 @@ public class StudentController extends javafx.scene.control.Tab {
         this.setContent(vb);
 
     }
+
+    private void getStudentsInDatabase(Connection connection) {
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `Student`JOIN Classes ON Student.fk_idClasses = Classes.idClasses");
+
+            while (rs.next()){
+
+                Student student = new Student(
+                        new Name(rs.getString("name"),rs.getString("lastname")),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("dob"),
+                        rs.getString("classname"));
+                studentList.add(student);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     private void setUpValueInTables(ArrayList<PropertyValueFactory> propertyValueFactoryArrayList) {
         for(int i=0;i<propertyValueFactoryArrayList.size();i++){
@@ -175,7 +206,7 @@ public class StudentController extends javafx.scene.control.Tab {
     }
 
     private void addCar(ObservableList<Student> studentList, Map<String, String> userInput){
-        studentList.add( new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997"));
+        studentList.add( new Student(new Name("Jean","Patrick"),"jeanPatrick@gmail.com","+353 8521 1258 21","21/03/1997","TEST"));
     }
 
     /**

@@ -1,15 +1,11 @@
 import controller.StudentController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.util.Comparator;
-
+import java.sql.*;
 
 /**
  * Create the GUI
@@ -23,12 +19,23 @@ public class Main extends Application { ;
     @Override
     public void start(Stage primaryStage) {
         try {
+
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_oop","root","");
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery("SELECT * FROM `Student");
+                while (result.next()){
+                    System.out.println(result.toString());
+                }
+
+
+
+
             BorderPane mainPane = new BorderPane();
             Group root = new Group();
             Scene scene = new Scene(root,1200,800);
 
             TabPane tp = new TabPane();
-            tp.getTabs().add (new StudentController());
+            tp.getTabs().add (new StudentController(connection));
 
             mainPane.setCenter(tp);
             mainPane.prefHeightProperty().bind(scene.heightProperty());
