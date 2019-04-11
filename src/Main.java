@@ -1,4 +1,5 @@
 import controller.StudentController;
+import database.ConnectionToDatabase;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -20,15 +21,9 @@ public class Main extends Application { ;
     public void start(Stage primaryStage) {
         try {
 
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_oop","root","");
+                Connection connection = ConnectionToDatabase.getInstance();
                 Statement statement = connection.createStatement();
                 ResultSet result = statement.executeQuery("SELECT * FROM `Student");
-                while (result.next()){
-                    System.out.println(result.toString());
-                }
-
-
-
 
             BorderPane mainPane = new BorderPane();
             Group root = new Group();
