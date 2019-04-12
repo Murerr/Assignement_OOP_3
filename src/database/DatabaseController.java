@@ -85,8 +85,25 @@ public class DatabaseController  implements DatabaseQueries{
     }
 
     @Override
-    public void updateStudent(int studentId,Student student) {
+    public void updateStudent(int studentId,Student student) { //UPDATE `Student` SET `idStudent`=[value-1],`name`=[value-2],`lastName`=[value-3],`dob`=[value-4],`email`=[value-5],`phone`=[value-6],`fk_idClasses`=[value-7] WHERE 1
+        try{
+            Statement stmt = connection.createStatement();
+            String query = "UPDATE `Student` "
+                    + "SET " +
+                    "`name`=" + "'" + student.getName().getFirstName() + "'" + "," +
+                    "`lastName`=" + "'" + student.getName().getLastName() + "'" + "," +
+                    "`dob`=" + "'" + student.getDob() + "'" + "," +
+                    "`email`=" + "'" + student.getEmail() + "'" + "," +
+                    "`phone`=" + "'" + student.getPhone() + "'" +
+                    " WHERE `idStudent` =" + studentId;
 
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -143,7 +160,7 @@ public class DatabaseController  implements DatabaseQueries{
     }
 
     @Override
-    public void updateClasses(int classesId,Classes classes) { //UPDATE `Classes` SET `idClasses`=[value-1],`classname`=[value-2] WHERE Classes.idClasses =
+    public void updateClasses(int classesId,Classes classes) {
         try{
             Statement stmt = connection.createStatement();
             String query = "UPDATE `Classes` "

@@ -30,7 +30,6 @@ public class ClassesController extends Tab {
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
-    private Button confirmButton;
 
     private TextField id;
     private TextField name;
@@ -129,7 +128,6 @@ public class ClassesController extends Tab {
         addButton = new Button("Add\n");
         deleteButton = new Button("Delete\n");
         editButton = new Button("Edit\n");
-        confirmButton = new Button("Confirm\n");
 
         id =        new TextField();
         name =      new TextField();
@@ -146,7 +144,6 @@ public class ClassesController extends Tab {
         gp.add(id,0,1);
         gp.add(name,1,1);
         gp.add(addButton,2,1);
-        gp.add(confirmButton,3,1);
 
         hb.getChildren().add(gp);
         hb.setSpacing(3);

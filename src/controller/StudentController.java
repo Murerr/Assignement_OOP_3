@@ -28,6 +28,7 @@ public class StudentController extends javafx.scene.control.Tab {
 
     private Button addButton;
     private Button deleteButton;
+    private Button editButton;
 
     private TextField name;
     private TextField lastName;
@@ -49,10 +50,10 @@ public class StudentController extends javafx.scene.control.Tab {
         ArrayList<Student> studentArrayList = databaseController.getStudentsInDatabase();
         ObservableList<Student> observableStudentList = FXCollections.observableArrayList(studentArrayList);
         table.setItems(observableStudentList);
-
+        table.setOnMousePressed(event -> editStudent(observableStudentList,table.getSelectionModel().getSelectedIndex()));
         addButton.setOnAction(event -> addStudent(observableStudentList,getUserInput(),databaseController));
         deleteButton.setOnAction(event -> deleteStudent(observableStudentList,table.getSelectionModel().getSelectedIndex(),databaseController));
-
+        editButton.setOnAction(event -> updateStudent(observableStudentList,table.getSelectionModel().getSelectedIndex(),getUserInput(),databaseController));
         this.setContent(vb);
 
     }
@@ -61,6 +62,32 @@ public class StudentController extends javafx.scene.control.Tab {
      * @param studentIndex The student index
      * delete the student at the list index
      */
+    private void editStudent(ObservableList<Student> studentList, int studentIndex){
+        Student studentToBeEdited = studentList.get(studentIndex);
+        name.setText(studentToBeEdited.getName().getFirstName());
+        lastName.setText(studentToBeEdited.getName().getLastName());
+        email.setText(studentToBeEdited.getEmail());
+        phone.setText(studentToBeEdited.getPhone());
+        dob.setText(studentToBeEdited.getDob());
+        classNumber.setText(studentToBeEdited.getClassName());
+
+    }
+    private void updateStudent(ObservableList<Student> studentList, int studentIndex, Map<String, String> userInput, DatabaseController databaseController){
+        if (studentIndex!=-1){
+            Student studentToBeEdited = studentList.get(studentIndex);
+            Student studentUpdated = new Student(studentToBeEdited.getId(),new Name(userInput.get("name"), userInput.get("lastName")),
+                    userInput.get("email"),
+                    userInput.get("phone"),
+                    userInput.get("dob"),
+                    userInput.get("classNumber"));
+            studentList.set(studentIndex,studentUpdated);
+            databaseController.updateStudent(studentUpdated.getId(),studentUpdated);
+        }
+
+    }
+
+
+
     private void deleteStudent(ObservableList<Student> studentList,int studentIndex,DatabaseController databaseController) {
         Student studentToBeRemoved = studentList.get(studentIndex);
         studentList.remove(studentToBeRemoved);
@@ -129,6 +156,7 @@ public class StudentController extends javafx.scene.control.Tab {
         HBox hb  = new HBox();
         addButton = new Button("Add\n");
         deleteButton = new Button("Delete\n");
+        editButton= new Button("Edit\n");
 
         name =            new TextField();
         lastName =        new TextField();
@@ -152,6 +180,7 @@ public class StudentController extends javafx.scene.control.Tab {
         gp.add(dobLabel,4,0);
         gp.add(classLabel,5,0);
         gp.add(deleteButton,6,0);
+        gp.add(editButton,7,0);
 
         gp.add(name,0,1);
         gp.add(lastName,1,1);
