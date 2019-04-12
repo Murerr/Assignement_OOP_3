@@ -1,6 +1,6 @@
 package user;
 
-public class Student extends Person implements Cloneable {
+public class Student extends Person {
     private String dob;
     private String className;
 
@@ -26,5 +26,4 @@ public class Student extends Person implements Cloneable {
         this.className = className;
     }
 
-    public Student clone() throws CloneNotSupportedException { return (Student) super.clone(); }
 }

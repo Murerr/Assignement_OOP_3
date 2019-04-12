@@ -50,8 +50,6 @@ public class DatabaseController  implements DatabaseQueries{
     @Override
     public void deleteStudent(int studentId) {
         try{
-            //TODO FIX DATABASE CONSTRAINT ERROR;
-            // HACK : SET GLOBAL FOREIGN_KEY_CHECKS=0
             Statement stmt = connection.createStatement();
             String query =
                     "DELETE FROM Student WHERE Student.idStudent= "+studentId+";";
@@ -65,8 +63,6 @@ public class DatabaseController  implements DatabaseQueries{
     @Override
     public void addStudent(Student student) {
         try{
-            //TODO FIX DATABASE CONSTRAINT ERROR;
-            // HACK : SET GLOBAL FOREIGN_KEY_CHECKS=0
             Statement stmt = connection.createStatement();
 
             int randomNumber = new Random().nextInt(50)+1;
@@ -85,6 +81,11 @@ public class DatabaseController  implements DatabaseQueries{
         } catch (Exception e){
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void updateStudent(int studentId,Student student) {
 
     }
 
@@ -113,8 +114,6 @@ public class DatabaseController  implements DatabaseQueries{
     @Override
     public void deleteClasses(int classesId) {
         try{
-            //TODO FIX DATABASE CONSTRAINT ERROR;
-            // HACK : SET GLOBAL FOREIGN_KEY_CHECKS=0
             Statement stmt = connection.createStatement();
             String query =
                     "DELETE FROM `Classes` WHERE `Classes`.`idClasses` ="+classesId+";";
@@ -129,8 +128,6 @@ public class DatabaseController  implements DatabaseQueries{
     @Override
     public void addClasses(Classes classes) {
         try{
-            //TODO FIX DATABASE CONSTRAINT ERROR;
-            // HACK : SET GLOBAL FOREIGN_KEY_CHECKS=0
             Statement stmt = connection.createStatement();
             String query = "INSERT INTO `Classes`(`classname`) "
                     + "VALUES (" +
@@ -143,5 +140,24 @@ public class DatabaseController  implements DatabaseQueries{
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void updateClasses(int classesId,Classes classes) { //UPDATE `Classes` SET `idClasses`=[value-1],`classname`=[value-2] WHERE Classes.idClasses =
+        try{
+            Statement stmt = connection.createStatement();
+            String query = "UPDATE `Classes` "
+                    + "SET " +
+                    "`idClasses`=" + "'" + classes.getId() + "'" + "," +
+                    "`classname`=" + "'" + classes.getName() + "'" +
+                    " WHERE `idClasses` =" + classesId;
+
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

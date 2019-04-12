@@ -56,28 +56,6 @@ public class StudentController extends javafx.scene.control.Tab {
         this.setContent(vb);
 
     }
-
-    /**
-     * @param studentList The car list to be clone
-     * Clone the first element of the list 1000 times
-     * If the list is empty nothing happend
-     */
-    private void cloneMyCars(ObservableList<Student> studentList) {
-        if (!studentList.isEmpty()){
-            Student carToBeCloned = studentList.get(0);
-            ArrayList<Student> tempList = new ArrayList<Student>();
-            for (int i=0;i<1000;i++){
-                try {
-                    Student car = carToBeCloned.clone();
-                    tempList.add(car);
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
-            }
-            studentList.addAll(tempList);
-        }
-    }
-
     /**
      * @param studentList The student list
      * @param studentIndex The student index

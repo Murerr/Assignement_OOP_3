@@ -1,11 +1,15 @@
 package controller;
 
 import database.DatabaseController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,6 +29,8 @@ public class ClassesController extends Tab {
 
     private Button addButton;
     private Button deleteButton;
+    private Button editButton;
+    private Button confirmButton;
 
     private TextField id;
     private TextField name;
@@ -41,9 +47,26 @@ public class ClassesController extends Tab {
         ObservableList<Classes> observableClassesList = FXCollections.observableArrayList(classesArrayList);
         table.setItems(observableClassesList);
 
+        table.setOnMousePressed(event -> editClasses(observableClassesList,table.getSelectionModel().getSelectedIndex()));
         addButton.setOnAction(event -> addClasses(observableClassesList,getUserInput(),databaseController));
         deleteButton.setOnAction(event -> deleteClasses(observableClassesList,table.getSelectionModel().getSelectedIndex(),databaseController));
+        editButton.setOnAction(event -> updateClasses(observableClassesList,table.getSelectionModel().getSelectedIndex(),getUserInput(),databaseController));
+
         this.setContent(vb);
+    }
+
+    private void editClasses(ObservableList<Classes> classesList, int classesIndex){
+        Classes classesToBeEdited = classesList.get(classesIndex);
+        id.setText(String.valueOf(classesToBeEdited.getId()));
+        name.setText(classesToBeEdited.getName());
+    }
+    private void updateClasses(ObservableList<Classes> classesList, int classesIndex, Map<String, String> userInput, DatabaseController databaseController){
+        if (classesIndex!=-1){
+            Classes classesUpdated = new Classes(Integer.valueOf(userInput.get("id")), userInput.get("name"), new ArrayList<Student>());
+            classesList.set(classesIndex,classesUpdated);
+            databaseController.updateClasses(Integer.valueOf(userInput.get("id")),classesUpdated);
+        }
+
     }
 
     /**
@@ -54,7 +77,7 @@ public class ClassesController extends Tab {
     private void deleteClasses(ObservableList<Classes> classesList,int classesIndex,DatabaseController databaseController) {
         Classes classesToBeRemoved = classesList.get(classesIndex);
         classesList.remove(classesToBeRemoved);
-        databaseController.deleteStudent(classesToBeRemoved.getId());
+        databaseController.deleteClasses(classesToBeRemoved.getId());
     }
 
     private void addClasses(ObservableList<Classes> classesList, Map<String, String> userInput,DatabaseController databaseController){
@@ -105,6 +128,8 @@ public class ClassesController extends Tab {
         HBox hb  = new HBox();
         addButton = new Button("Add\n");
         deleteButton = new Button("Delete\n");
+        editButton = new Button("Edit\n");
+        confirmButton = new Button("Confirm\n");
 
         id =        new TextField();
         name =      new TextField();
@@ -116,10 +141,12 @@ public class ClassesController extends Tab {
         gp.add(idLabel,0,0);
         gp.add(nameLabel,1,0);
         gp.add(deleteButton,2,0);
+        gp.add(editButton,3,0);
 
         gp.add(id,0,1);
         gp.add(name,1,1);
         gp.add(addButton,2,1);
+        gp.add(confirmButton,3,1);
 
         hb.getChildren().add(gp);
         hb.setSpacing(3);

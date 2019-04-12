@@ -14,12 +14,15 @@ public interface DatabaseQueries {
 
     void addStudent(Student student);
 
+    void updateStudent(int studentId, Student student);
 
     ArrayList<Classes> getClassesInDatabase();
 
-    void deleteClasses(int ClassesId);
+    void deleteClasses(int classesId);
 
     void addClasses(Classes classes);
+
+    void updateClasses(int classesId,Classes classes);
 
 
 
