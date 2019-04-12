@@ -2,6 +2,7 @@ package database;
 
 import school.Classes;
 import user.Student;
+import user.Teacher;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -25,5 +26,11 @@ public interface DatabaseQueries {
     void updateClasses(int classesId,Classes classes);
 
 
+    ArrayList<Teacher> getTeachersInDatabase();
 
+    void deleteTeacher(int teacherId);
+
+    void addTeacher(Teacher teacher);
+
+    void updateTeacher(int teacherId, Teacher teacher);
 }

@@ -3,6 +3,7 @@ package database;
 import school.Classes;
 import user.Name;
 import user.Student;
+import user.Teacher;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -85,7 +86,7 @@ public class DatabaseController  implements DatabaseQueries{
     }
 
     @Override
-    public void updateStudent(int studentId,Student student) { //UPDATE `Student` SET `idStudent`=[value-1],`name`=[value-2],`lastName`=[value-3],`dob`=[value-4],`email`=[value-5],`phone`=[value-6],`fk_idClasses`=[value-7] WHERE 1
+    public void updateStudent(int studentId,Student student) {
         try{
             Statement stmt = connection.createStatement();
             String query = "UPDATE `Student` "
@@ -168,6 +169,88 @@ public class DatabaseController  implements DatabaseQueries{
                     "`idClasses`=" + "'" + classes.getId() + "'" + "," +
                     "`classname`=" + "'" + classes.getName() + "'" +
                     " WHERE `idClasses` =" + classesId;
+
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public ArrayList<Teacher> getTeachersInDatabase() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `Teacher`");
+            ArrayList<Teacher> teacherList = new ArrayList<>();
+            while (rs.next()){
+
+                Teacher teacher = new Teacher(
+                        rs.getInt("idTeacher"),
+                        new Name(rs.getString("name"),rs.getString("lastname")),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("degree"));
+                teacherList.add(teacher);
+
+            }
+            return teacherList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteTeacher(int teacherId) {
+        try{
+            Statement stmt = connection.createStatement();
+            String query =
+                    "DELETE FROM `Teacher` WHERE `idTeacher` ="+teacherId+";";
+            System.out.println(query);
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void addTeacher(Teacher teacher) {
+        try{
+            Statement stmt = connection.createStatement();
+            // INSERT INTO `Teacher`(`idTeacher`, `name`, `lastname`, `email`, `phone`, `degree`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
+            String query = "INSERT INTO `Teacher` (`name`, `lastname`, `email`, `phone`, `degree`) "
+                    + "VALUES (" +
+                    "'" + teacher.getName().getFirstName() + "'," +
+                    "'" + teacher.getName().getLastName() + "', " +
+                    "'" + teacher.getEmail() + "'," +
+                    "'" + teacher.getPhone() + "'," +
+                    "'" + teacher.getDegree() + "')";
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateTeacher(int teacherId, Teacher teacher) {
+        try{
+            Statement stmt = connection.createStatement();
+            String query = "UPDATE `Teacher` "
+                    + "SET " +
+                    "`name`=" + "'" + teacher.getName().getFirstName() + "'" + "," +
+                    "`lastName`=" + "'" + teacher.getName().getLastName() + "'" + "," +
+                    "`degree`=" + "'" + teacher.getDegree() + "'" + "," +
+                    "`email`=" + "'" + teacher.getEmail() + "'" + "," +
+                    "`phone`=" + "'" + teacher.getPhone() + "'" +
+                    " WHERE `idTeacher` =" + teacherId;
 
             System.out.println(query);
 

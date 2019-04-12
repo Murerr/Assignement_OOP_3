@@ -1,5 +1,6 @@
 import controller.ClassesController;
 import controller.StudentController;
+import controller.TeacherController;
 import database.ConnectionSingleton;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -29,6 +30,7 @@ public class Main extends Application { ;
 
             TabPane tp = new TabPane();
             tp.getTabs().add (new StudentController(connectionToDatabase));
+            tp.getTabs().add (new TeacherController(connectionToDatabase));
             tp.getTabs().add (new ClassesController(connectionToDatabase));
 
             mainPane.setCenter(tp);
