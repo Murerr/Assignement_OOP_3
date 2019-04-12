@@ -1,5 +1,6 @@
 package database;
 
+import school.Classes;
 import user.Student;
 
 import java.sql.Connection;
@@ -12,6 +13,14 @@ public interface DatabaseQueries {
     void deleteStudent(int studentId);
 
     void addStudent(Student student);
+
+
+    ArrayList<Classes> getClassesInDatabase();
+
+    void deleteClasses(int ClassesId);
+
+    void addClasses(Classes classes);
+
 
 
 }

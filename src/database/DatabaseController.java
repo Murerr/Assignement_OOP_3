@@ -1,5 +1,6 @@
 package database;
 
+import school.Classes;
 import user.Name;
 import user.Student;
 
@@ -77,6 +78,63 @@ public class DatabaseController  implements DatabaseQueries{
                     "'" + student.getEmail() + "'," +
                     "'" + student.getPhone() + "'," +
                     "'" + randomNumber + "')";
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public ArrayList<Classes> getClassesInDatabase() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `Classes`;");
+            ArrayList<Classes> classesList = new ArrayList<>();
+            while (rs.next()){
+
+                Classes classes = new Classes(
+                        rs.getInt("idClasses"),
+                        rs.getString("classname"),
+                        new ArrayList<Student>());
+                classesList.add(classes);
+
+            }
+            return classesList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteClasses(int classesId) {
+        try{
+            //TODO FIX DATABASE CONSTRAINT ERROR;
+            // HACK : SET GLOBAL FOREIGN_KEY_CHECKS=0
+            Statement stmt = connection.createStatement();
+            String query =
+                    "DELETE FROM `Classes` WHERE `Classes`.`idClasses` ="+classesId+";";
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void addClasses(Classes classes) {
+        try{
+            //TODO FIX DATABASE CONSTRAINT ERROR;
+            // HACK : SET GLOBAL FOREIGN_KEY_CHECKS=0
+            Statement stmt = connection.createStatement();
+            String query = "INSERT INTO `Classes`(`classname`) "
+                    + "VALUES (" +
+                    "'" + classes.getName() + "')";
             System.out.println(query);
 
             stmt.executeUpdate(query);

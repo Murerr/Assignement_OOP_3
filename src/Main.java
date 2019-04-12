@@ -1,5 +1,6 @@
+import controller.ClassesController;
 import controller.StudentController;
-import database.ConnectionToDatabase;
+import database.ConnectionSingleton;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,13 +22,14 @@ public class Main extends Application { ;
     public void start(Stage primaryStage) {
         try {
 
-            Connection connectionToDatabase = ConnectionToDatabase.getInstance();
+            Connection connectionToDatabase = ConnectionSingleton.getInstance();
             BorderPane mainPane = new BorderPane();
             Group root = new Group();
             Scene scene = new Scene(root,1200,800);
 
             TabPane tp = new TabPane();
             tp.getTabs().add (new StudentController(connectionToDatabase));
+            tp.getTabs().add (new ClassesController(connectionToDatabase));
 
             mainPane.setCenter(tp);
             mainPane.prefHeightProperty().bind(scene.heightProperty());

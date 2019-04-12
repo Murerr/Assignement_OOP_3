@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionToDatabase {
+public class ConnectionSingleton {
     private static Connection connectionInstance;
 
     static {
@@ -19,6 +19,6 @@ public class ConnectionToDatabase {
         return connectionInstance;
     }
 
-    private ConnectionToDatabase() {
+    private ConnectionSingleton() {
     }
 }

@@ -5,12 +5,22 @@ import user.Student;
 import java.util.ArrayList;
 
 public class Classes {
+    private int id;
     private String name;
     private ArrayList<Student> students;
 
-    public Classes(String name, ArrayList<Student> students) {
+    public Classes(int id,String name, ArrayList<Student> students) {
+        this.id = id;
         this.name = name;
         this.students = students;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
