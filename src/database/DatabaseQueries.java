@@ -41,4 +41,5 @@ public interface DatabaseQueries {
     void addModule(Module module);
 
     void updateModule(int moduleId, Module teacher);
+
 }

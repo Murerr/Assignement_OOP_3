@@ -19,6 +19,15 @@ public class ConnectionSingleton {
         return connectionInstance;
     }
 
-    private ConnectionSingleton() {
+    public static Connection getTestInstance() {
+        try {
+            return connectionInstance = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_oop_test","root","");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
+
+
 }
