@@ -1,4 +1,5 @@
 import controller.ClassesController;
+import controller.ModuleController;
 import controller.StudentController;
 import controller.TeacherController;
 import database.ConnectionSingleton;
@@ -32,6 +33,7 @@ public class Main extends Application { ;
             tp.getTabs().add (new StudentController(connectionToDatabase));
             tp.getTabs().add (new TeacherController(connectionToDatabase));
             tp.getTabs().add (new ClassesController(connectionToDatabase));
+            tp.getTabs().add (new ModuleController(connectionToDatabase));
 
             mainPane.setCenter(tp);
             mainPane.prefHeightProperty().bind(scene.heightProperty());

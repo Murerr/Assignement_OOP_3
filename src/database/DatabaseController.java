@@ -1,6 +1,7 @@
 package database;
 
 import school.Classes;
+import school.Module;
 import user.Name;
 import user.Student;
 import user.Teacher;
@@ -222,7 +223,6 @@ public class DatabaseController  implements DatabaseQueries{
     public void addTeacher(Teacher teacher) {
         try{
             Statement stmt = connection.createStatement();
-            // INSERT INTO `Teacher`(`idTeacher`, `name`, `lastname`, `email`, `phone`, `degree`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
             String query = "INSERT INTO `Teacher` (`name`, `lastname`, `email`, `phone`, `degree`) "
                     + "VALUES (" +
                     "'" + teacher.getName().getFirstName() + "'," +
@@ -251,6 +251,87 @@ public class DatabaseController  implements DatabaseQueries{
                     "`email`=" + "'" + teacher.getEmail() + "'" + "," +
                     "`phone`=" + "'" + teacher.getPhone() + "'" +
                     " WHERE `idTeacher` =" + teacherId;
+
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public ArrayList<Module> getModuleInDatabase() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `Module` INNER JOIN Grades on Module.idModule = Grades.fk_idModule INNER JOIN Teacher on fk_idTeacher = Teacher.idTeacher GROUP BY Module.moduleName  \n" +
+                    "ORDER BY `Grades`.`score` DESC;");
+            ArrayList<Module> moduleList = new ArrayList<>();
+            while (rs.next()){
+
+                Module module = new Module(
+                        rs.getInt("idModule"),
+                        rs.getString("moduleName"),
+                        rs.getString("code"),
+                        new Name(rs.getString("name"),rs.getString("lastName")),
+                        rs.getInt("score"));
+                moduleList.add(module);
+            }
+            return moduleList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteModule(int moduleId) {
+        try{
+            Statement stmt = connection.createStatement();
+            String query =
+                    "DELETE FROM `Module` WHERE `Module`.`idModule` ="+moduleId+";";
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void addModule(Module module) {
+        try{
+            Statement stmt = connection.createStatement();
+            Random randomNumber = new Random();
+
+            // INSERT INTO `Module`(`idModule`, `moduleName`, `code`, `fk_idStudent`, `fk_idTeacher`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+            String query = "INSERT INTO `Module` (`moduleName`, `code`, `fk_idStudent`, `fk_idTeacher`) "
+                    + "VALUES (" +
+                    "'" + module.getName() + "'," +
+                    "'" + module.getCode() + "', " +
+                    "'" + randomNumber.nextInt(50)+1 + "'," +
+                    "'" + randomNumber.nextInt(50)+1 + "')";
+            System.out.println(query);
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void updateModule(int moduleId,Module module) {
+        try{
+            Statement stmt = connection.createStatement();
+            String query = "UPDATE `Module` "
+                    + "SET " +
+                    "`idModule`=" + "'" + module.getId() + "'" + "," +
+                    "`code`=" + "'" + module.getCode() + "'" + "," +
+                    "`moduleName`=" + "'" + module.getName() + "'" +
+                    " WHERE `idModule` =" + moduleId;
 
             System.out.println(query);
 

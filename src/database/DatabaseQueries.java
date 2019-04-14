@@ -1,10 +1,10 @@
 package database;
 
 import school.Classes;
+import school.Module;
 import user.Student;
 import user.Teacher;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
 public interface DatabaseQueries {
@@ -33,4 +33,12 @@ public interface DatabaseQueries {
     void addTeacher(Teacher teacher);
 
     void updateTeacher(int teacherId, Teacher teacher);
+
+    ArrayList<Module> getModuleInDatabase();
+
+    void deleteModule(int moduleId);
+
+    void addModule(Module module);
+
+    void updateModule(int moduleId, Module teacher);
 }

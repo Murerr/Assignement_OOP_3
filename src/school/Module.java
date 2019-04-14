@@ -1,25 +1,28 @@
 package school;
 
-import user.Student;
-import user.Teacher;
-
-import java.util.ArrayList;
+import user.Name;
 
 public class Module {
+    private int id;
     private String name;
     private String code;
-    private Teacher teacher;
-    private ArrayList<Student> students;
+    private Name teacher;
+    private int averageGrade;
 
-    public Module(String name, String code, Teacher teacher, ArrayList<Student> students) {
+    public Module(int id, String name, String code, Name teacher, int averageGrade) {
+        this.id = id;
         this.name = name;
         this.code = code;
         this.teacher = teacher;
-        this.students = students;
+        this.averageGrade = averageGrade;
     }
 
-    public Module(String name) {
-        this.name = name;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -38,22 +41,19 @@ public class Module {
         this.code = code;
     }
 
-    public Teacher getTeacher() {
+    public Name getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(Name teacher) {
         this.teacher = teacher;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
+    public int getAverageGrade() {
+        return averageGrade;
     }
 
-    public void setStudents(ArrayList<Student> students) {
-        this.students = students;
+    public void setAverageGrade(int averageGrade) {
+        this.averageGrade = averageGrade;
     }
-
-
-
 }
