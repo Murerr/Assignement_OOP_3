@@ -9,7 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import java.sql.*;
+
+import java.sql.Connection;
 
 /**
  * Create the GUI

@@ -1,20 +1,16 @@
 package test.all;
 
-import controller.StudentController;
 import database.ConnectionSingleton;
 import database.DatabaseController;
 import org.junit.Before;
 import org.junit.Test;
+import school.Grade;
+import user.Name;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -357,6 +353,7 @@ public class AllTest {
                 "('98','33','48','23'),\n" +
                 "('99','88','49','24'),\n" +
                 "('100','80','50','25'); \n";
+        Grade grade = new Grade(0,0,"", new Name("",""));
         return "SELECT * FROM `Module`";
     }
 
