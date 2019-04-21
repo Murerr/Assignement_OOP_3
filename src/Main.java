@@ -20,6 +20,10 @@ public class Main extends Application { ;
         launch(args);
     }
 
+    /**
+     * Start The Gui
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -40,7 +44,7 @@ public class Main extends Application { ;
             mainPane.prefWidthProperty().bind(scene.widthProperty());
 
             root.getChildren().add(mainPane);
-            primaryStage.setTitle("Assignement 2 Rudy MURER R00171701");
+            primaryStage.setTitle("Assignement 3 SQL Rudy MURER R00171701");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch(Exception e) {

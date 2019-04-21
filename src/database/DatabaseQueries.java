@@ -7,6 +7,9 @@ import user.Teacher;
 
 import java.util.ArrayList;
 
+/**
+ *  Interface Containing all the databases queries;
+ */
 public interface DatabaseQueries {
 
     ArrayList<Student> getStudentsInDatabase();

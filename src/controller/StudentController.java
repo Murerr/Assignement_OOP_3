@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Create a tab containing a TableView of all car
+ * Create a tab containing a TableView of all students
  */
 public class StudentController extends javafx.scene.control.Tab {
 
@@ -38,7 +38,9 @@ public class StudentController extends javafx.scene.control.Tab {
     private TextField classNumber;
 
 
-
+    /**
+     * @param connection
+     */
     public StudentController(Connection connection) {
         this.setText("Student Panel");
         TableView table = new TableView();
@@ -72,6 +74,13 @@ public class StudentController extends javafx.scene.control.Tab {
         classNumber.setText(studentToBeEdited.getClassName());
 
     }
+
+    /**
+     * @param studentList
+     * @param studentIndex
+     * @param userInput
+     * @param databaseController
+     */
     private void updateStudent(ObservableList<Student> studentList, int studentIndex, Map<String, String> userInput, DatabaseController databaseController){
         if (studentIndex!=-1){
             Student studentToBeEdited = studentList.get(studentIndex);
@@ -87,13 +96,22 @@ public class StudentController extends javafx.scene.control.Tab {
     }
 
 
-
+    /**
+     * @param studentList
+     * @param studentIndex
+     * @param databaseController
+     */
     private void deleteStudent(ObservableList<Student> studentList,int studentIndex,DatabaseController databaseController) {
         Student studentToBeRemoved = studentList.get(studentIndex);
         studentList.remove(studentToBeRemoved);
         databaseController.deleteStudent(studentToBeRemoved.getId());
     }
 
+    /**
+     * @param studentList
+     * @param userInput
+     * @param databaseController
+     */
     private void addStudent(ObservableList<Student> studentList, Map<String, String> userInput,DatabaseController databaseController){
         Student studentToBeAddedToDB = new Student( 0,new Name(userInput.get("name"), userInput.get("lastName")),
                 userInput.get("email"),
@@ -122,6 +140,9 @@ public class StudentController extends javafx.scene.control.Tab {
         return userInput;
     }
 
+    /**
+     * @param table
+     */
     private void setUpTables(TableView table){
 
         TableColumn nameTable = new TableColumn("Name");
@@ -149,6 +170,10 @@ public class StudentController extends javafx.scene.control.Tab {
 
     }
 
+    /**
+     * @param vb
+     * @param table
+     */
     private void setUpPanel(VBox vb,TableView table){
 
         vb.setSpacing(5);

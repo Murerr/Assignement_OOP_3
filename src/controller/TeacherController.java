@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Create a tab containing a TableView of all car
+ * Create a tab containing a TableView of all teachers
  */
 public class TeacherController extends Tab {
 
@@ -33,7 +33,9 @@ public class TeacherController extends Tab {
     private TextField degree;
 
 
-
+    /**
+     * @param connection
+     */
     public TeacherController(Connection connection) {
         this.setText("Teacher Panel");
         TableView table = new TableView();
@@ -66,6 +68,13 @@ public class TeacherController extends Tab {
         degree.setText(teacherToBeEdited.getDegree());
 
     }
+
+    /**
+     * @param teacherList
+     * @param teacherIndex
+     * @param userInput
+     * @param databaseController
+     */
     private void updateTeacher(ObservableList<Teacher> teacherList, int teacherIndex, Map<String, String> userInput, DatabaseController databaseController){
         if (teacherIndex!=-1){
             Teacher teacherToBeEdited = teacherList.get(teacherIndex);
@@ -80,13 +89,22 @@ public class TeacherController extends Tab {
     }
 
 
-
+    /**
+     * @param teacherList
+     * @param teacherIndex
+     * @param databaseController
+     */
     private void deleteTeacher(ObservableList<Teacher> teacherList,int teacherIndex,DatabaseController databaseController) {
         Teacher teacherToBeRemoved = teacherList.get(teacherIndex);
         teacherList.remove(teacherToBeRemoved);
         databaseController.deleteTeacher(teacherToBeRemoved.getId());
     }
 
+    /**
+     * @param teacherList
+     * @param userInput
+     * @param databaseController
+     */
     private void addTeacher(ObservableList<Teacher> teacherList, Map<String, String> userInput,DatabaseController databaseController){
         Teacher teacherToBeAddedToDB = new Teacher(0,new Name(userInput.get("name"), userInput.get("lastName")),
                 userInput.get("email"),
@@ -112,6 +130,9 @@ public class TeacherController extends Tab {
         return userInput;
     }
 
+    /**
+     * @param table
+     */
     private void setUpTables(TableView table){
 
         TableColumn nameTable = new TableColumn("Name");
@@ -136,6 +157,10 @@ public class TeacherController extends Tab {
 
     }
 
+    /**
+     * @param vb
+     * @param table
+     */
     private void setUpPanel(VBox vb,TableView table){
 
         vb.setSpacing(5);

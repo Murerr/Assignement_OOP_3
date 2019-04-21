@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Create a tab containing a TableView of all car
+ * Create a tab containing a TableView of all Modules
  */
 public class ModuleController extends Tab {
 
@@ -34,6 +34,9 @@ public class ModuleController extends Tab {
     private TextField averageGrade;
 
 
+    /**
+     * @param connection
+     */
     public ModuleController(Connection connection) {
         this.setText("Module Panel");
         TableView table = new TableView();
@@ -53,6 +56,10 @@ public class ModuleController extends Tab {
         this.setContent(vb);
     }
 
+    /**
+     * @param moduleList
+     * @param moduleIndex
+     */
     private void editModule(ObservableList<Module> moduleList, int moduleIndex){
         Module moduleToBeEdited = moduleList.get(moduleIndex);
         moduleName.setText(moduleToBeEdited.getName());
@@ -60,6 +67,14 @@ public class ModuleController extends Tab {
         teacherName.setText(moduleToBeEdited.getTeacher().toString());
         averageGrade.setText(String.valueOf(moduleToBeEdited.getAverageGrade()));
     }
+
+    /**
+     * @param moduleList
+     * @param moduleIndex
+     * @param userInput
+     * @param databaseController
+     * @param selectedItem
+     */
     private void updateModule(ObservableList<Module> moduleList, int moduleIndex, Map<String, String> userInput, DatabaseController databaseController, Object selectedItem){
         if (moduleIndex!=-1){
             Module moduleUpdated = new Module(0,
@@ -85,6 +100,11 @@ public class ModuleController extends Tab {
         databaseController.deleteModule(moduleToBeRemoved.getId());
     }
 
+    /**
+     * @param moduleList
+     * @param userInput
+     * @param databaseController
+     */
     private void addModule(ObservableList<Module> moduleList, Map<String, String> userInput,DatabaseController databaseController){
         Module moduleToBeAddedToDB = new Module(
                 0,
@@ -111,6 +131,9 @@ public class ModuleController extends Tab {
         return userInput;
     }
 
+    /**
+     * @param table
+     */
     private void setUpTables(TableView table){
 
         TableColumn moduleName = new TableColumn("Name");
@@ -135,6 +158,10 @@ public class ModuleController extends Tab {
 
     }
 
+    /**
+     * @param vb
+     * @param table
+     */
     private void setUpPanel(VBox vb,TableView table){
 
         vb.setSpacing(5);

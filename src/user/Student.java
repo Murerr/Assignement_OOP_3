@@ -1,9 +1,20 @@
 package user;
 
+/**
+ * A student
+ */
 public class Student extends Person {
     private String dob;
     private String className;
 
+    /**
+     * @param id
+     * @param name
+     * @param email
+     * @param phone
+     * @param dob
+     * @param className
+     */
     public Student(int id, Name name, String email, String phone, String dob, String className) {
         super(id, name, email, phone);
         this.dob = dob;

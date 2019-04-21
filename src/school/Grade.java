@@ -2,6 +2,9 @@ package school;
 
 import user.Name;
 
+/**
+ * A grade
+ */
 public class Grade {
 
     private int id;
@@ -9,6 +12,12 @@ public class Grade {
     private String Module;
     private Name StudentName;
 
+    /**
+     * @param id
+     * @param score
+     * @param module
+     * @param studentName
+     */
     public Grade(int id, int score, String module, Name studentName) {
         this.id = id;
         this.score = score;

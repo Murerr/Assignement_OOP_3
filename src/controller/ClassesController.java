@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Create a tab containing a TableView of all car
+ * Create a tab containing a TableView of all Classes
  */
 public class ClassesController extends Tab {
 
@@ -79,6 +79,11 @@ public class ClassesController extends Tab {
         databaseController.deleteClasses(classesToBeRemoved.getId());
     }
 
+    /**
+     * @param classesList
+     * @param userInput
+     * @param databaseController
+     */
     private void addClasses(ObservableList<Classes> classesList, Map<String, String> userInput,DatabaseController databaseController){
         Classes classesToBeAddedToDB = new Classes(
                 Integer.valueOf(userInput.get("id")),
@@ -102,6 +107,9 @@ public class ClassesController extends Tab {
         return userInput;
     }
 
+    /**
+     * @param table
+     */
     private void setUpTables(TableView table){
 
         TableColumn idTable = new TableColumn("id");
@@ -120,6 +128,10 @@ public class ClassesController extends Tab {
 
     }
 
+    /**
+     * @param vb
+     * @param table
+     */
     private void setUpPanel(VBox vb,TableView table){
 
         vb.setSpacing(5);

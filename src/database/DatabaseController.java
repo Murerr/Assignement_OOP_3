@@ -13,17 +13,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ *  A DatabaseController when created give access to Database Queries
+ */
 public class DatabaseController  implements DatabaseQueries{
     private Connection connection;
 
+    /** Initilize the Database Controller
+     * @param connection
+     */
     public DatabaseController(Connection connection){
         this.connection = connection;
     }
 
+    /**
+     * @return a connection to the database
+     */
     public Connection getConnection() {
         return connection;
     }
 
+    /**
+     * @return An Arrayslist of Student
+     */
     @Override
     public ArrayList<Student> getStudentsInDatabase() {
         try {
@@ -49,6 +61,9 @@ public class DatabaseController  implements DatabaseQueries{
         return null;
     }
 
+    /** Delete a Student
+     * @param studentId
+     */
     @Override
     public void deleteStudent(int studentId) {
         try{
@@ -62,6 +77,9 @@ public class DatabaseController  implements DatabaseQueries{
         }
     }
 
+    /** Add A student
+     * @param student
+     */
     @Override
     public void addStudent(Student student) {
         try{
@@ -86,6 +104,10 @@ public class DatabaseController  implements DatabaseQueries{
 
     }
 
+    /** Update a Student
+     * @param studentId
+     * @param student
+     */
     @Override
     public void updateStudent(int studentId,Student student) {
         try{
@@ -108,6 +130,9 @@ public class DatabaseController  implements DatabaseQueries{
         }
     }
 
+    /**
+     * @return
+     */
     @Override
     public ArrayList<Classes> getClassesInDatabase() {
         try {
@@ -130,6 +155,9 @@ public class DatabaseController  implements DatabaseQueries{
         return null;
     }
 
+    /**
+     * @param classesId
+     */
     @Override
     public void deleteClasses(int classesId) {
         try{
@@ -144,6 +172,9 @@ public class DatabaseController  implements DatabaseQueries{
 
     }
 
+    /**
+     * @param classes
+     */
     @Override
     public void addClasses(Classes classes) {
         try{
@@ -161,6 +192,10 @@ public class DatabaseController  implements DatabaseQueries{
 
     }
 
+    /**
+     * @param classesId
+     * @param classes
+     */
     @Override
     public void updateClasses(int classesId,Classes classes) {
         try{
@@ -180,6 +215,9 @@ public class DatabaseController  implements DatabaseQueries{
         }
     }
 
+    /**
+     * @return
+     */
     @Override
     public ArrayList<Teacher> getTeachersInDatabase() {
         try {
@@ -204,6 +242,9 @@ public class DatabaseController  implements DatabaseQueries{
         return null;
     }
 
+    /**
+     * @param teacherId
+     */
     @Override
     public void deleteTeacher(int teacherId) {
         try{
@@ -219,6 +260,9 @@ public class DatabaseController  implements DatabaseQueries{
 
     }
 
+    /**
+     * @param teacher
+     */
     @Override
     public void addTeacher(Teacher teacher) {
         try{
@@ -239,6 +283,10 @@ public class DatabaseController  implements DatabaseQueries{
         }
     }
 
+    /**
+     * @param teacherId
+     * @param teacher
+     */
     @Override
     public void updateTeacher(int teacherId, Teacher teacher) {
         try{
@@ -261,6 +309,9 @@ public class DatabaseController  implements DatabaseQueries{
         }
     }
 
+    /**
+     * @return
+     */
     @Override
     public ArrayList<Module> getModuleInDatabase() {
         try {
@@ -285,6 +336,9 @@ public class DatabaseController  implements DatabaseQueries{
         return null;
     }
 
+    /**
+     * @param moduleId
+     */
     @Override
     public void deleteModule(int moduleId) {
         try{
@@ -299,13 +353,15 @@ public class DatabaseController  implements DatabaseQueries{
 
     }
 
+    /**
+     * @param module
+     */
     @Override
     public void addModule(Module module) {
         try{
             Statement stmt = connection.createStatement();
             Random randomNumber = new Random();
 
-            // INSERT INTO `Module`(`idModule`, `moduleName`, `code`, `fk_idStudent`, `fk_idTeacher`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
             String query = "INSERT INTO `Module` (`moduleName`, `code`, `fk_idStudent`, `fk_idTeacher`) "
                     + "VALUES (" +
                     "'" + module.getName() + "'," +
@@ -322,6 +378,10 @@ public class DatabaseController  implements DatabaseQueries{
 
     }
 
+    /**
+     * @param moduleId
+     * @param module
+     */
     @Override
     public void updateModule(int moduleId,Module module) {
         try{

@@ -4,24 +4,28 @@ import user.Student;
 
 import java.util.ArrayList;
 
+/**
+ *  A Class Object
+ */
 public class Classes {
     private int id;
     private String name;
     private ArrayList<Student> students;
 
+    /**
+     * @param id The class ID
+     * @param name The class name
+     * @param students A list of students in that class
+     */
     public Classes(int id,String name, ArrayList<Student> students) {
         this.id = id;
         this.name = name;
         this.students = students;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
     public String getName() {
         return name;

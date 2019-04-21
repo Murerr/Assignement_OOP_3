@@ -1,11 +1,20 @@
 package user;
 
+/**
+ * A Person
+ */
 public class Person {
     private int id;
     private Name name;
     private String email;
     private String phone;
 
+    /**
+     * @param id
+     * @param name
+     * @param email
+     * @param phone
+     */
     public Person(int id, Name name, String email, String phone) {
         this.id = id;
         this.name = name;

@@ -1,11 +1,18 @@
 package user;
 
+/**
+ * A name
+ */
 public class Name {
 
     String firstName;
     String lastName;
 
 
+    /**
+     * @param firstName
+     * @param lastName
+     */
     public Name(String firstName,String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
